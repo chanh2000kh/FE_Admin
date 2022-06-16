@@ -31,7 +31,7 @@ const Header = () => {
   const Logout = ()=> {
     localStorage.setItem("accessToken", '')
 		window.alert('Đăng xuất thành công!')
-    window.location.replace('http://localhost:3000')
+    window.location.replace('https://fe-admin.vercel.app')
   }
   return (
     <Navbar color="primary" dark expand="md">

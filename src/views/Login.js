@@ -49,8 +49,8 @@ export default class Login extends PureComponent {
             .then((res) => {
               localStorage.setItem("vaiTroId", res.data.data[0].vaiTroId)
               window.alert('Đăng nhập thành công !')
-              if(localStorage.getItem("vaiTroId") == 1)window.location.replace('http://localhost:3000/#/starter')
-              if(localStorage.getItem("vaiTroId") == 2)window.location.replace('http://localhost:3000/#/evaluation')
+              if(localStorage.getItem("vaiTroId") == 1)window.location.replace('https://fe-admin.vercel.app/#/starter')
+              if(localStorage.getItem("vaiTroId") == 2)window.location.replace('https://fe-admin.vercel.app/#/evaluation')
             })
             .catch((err) => {
               console.log(err);
