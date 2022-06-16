@@ -154,7 +154,7 @@ const headCells = [
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Tài khoản/gamil',
+    label: 'Tài khoản/gmail',
   },
   // {
   //   id: 'calories',
