@@ -12,7 +12,7 @@ import Fab from '@mui/material/Fab';
 
 const SalesChart = () => {
   const [listTurnover, setListTurnover] = useState([]);
-  const [year, setYear] = useState('2021');
+  const [year, setYear] = useState('2022');
   const handleChange = (event) => {
     setYear(event.target.value);
 };
@@ -95,7 +95,7 @@ const SalesChart = () => {
                             onChange={handleChange}
                         >
                             <MenuItem value={'2020'}>2020</MenuItem>
-                            <MenuItem value={'2021'}>2021</MenuItem>
+                            <MenuItem value={'2021'}></MenuItem>
                             <MenuItem value={'2022'}>2022</MenuItem>
                         </Select>
                     </FormControl>
