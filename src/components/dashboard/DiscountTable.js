@@ -227,7 +227,8 @@ const EnhancedTableToolbar = (props) => {
         console.log(data)
         callApi(`api/MaGiamGia/themMaGiamGia`, "POST", data)
             .then((res) => {
-                window.alert("Thêm thành công!")                
+                window.alert("Thêm thành công!")
+                window.location.reload()                
             })
             .catch((err) => {
                 console.log(err);

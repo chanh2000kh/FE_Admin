@@ -229,6 +229,7 @@ const EnhancedTableToolbar = (props) => {
     callApi(`api/SanPham/themSP`, "POST", data)
       .then((res) => {
         window.alert("Thêm thành công!")
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);
@@ -402,6 +403,7 @@ const ProductTables = () => {
     callApi(`api/SanPham/deleteSP/` + id, "DELETE")
       .then((res) => {
         window.alert("Xóa thành công!")
+        layDanhSach()
       })
       .catch((err) => {
         console.log(err);

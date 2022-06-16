@@ -102,7 +102,7 @@ function createData(name, calories, fat, carbs, protein) {
     protein,
   };
 }
-
+const AddThanhCong = false
 const rows = [
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Donut', 452, 25.0, 51, 4.9),
@@ -220,18 +220,6 @@ function EnhancedTableHead(props) {
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            {/* <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel> */}
             {headCell.label}
           </TableCell>
         ))}
@@ -282,14 +270,17 @@ const EnhancedTableToolbar = (props) => {
       xacNhanMatKhau: acceptPasswordCustomer
     }
 
-    console.log(data)
     callApi(`api/Users/dangkyNhanVien`, "POST", data)
       .then((res) => {
         window.alert("Thêm thành công!")
+        window.location.reload()
+        AddThanhCong=!AddThanhCong
       })
       .catch((err) => {
+        window.alert("Thêm Thất bại!")
         console.log(err);
       });
+      
   }
 
   return (
@@ -404,6 +395,7 @@ const ProjectTables = () => {
   const deleteUser = (id)=>{
     callApi(`api/Users/xoaNguoiDung/`+id, "DELETE" )
     .then((res) => {
+      getListUser()
       window.alert("Xóa thành công!")
     })
     .catch((err) => {
@@ -414,12 +406,11 @@ const ProjectTables = () => {
   //-------------------------------------------
 
   const [listUser, setListUser] = useState([])
-  useEffect(() => {
+  const getListUser = ()=> {
     if (selectedValue == 'staff')
       callApi(`api/Users/laydanhsachNhanVien`, "GET")
         .then((res) => {
           setListUser(res.data.data)
-          console.log(res.data.data)
         })
         .catch((err) => {
           console.log(err);
@@ -433,7 +424,10 @@ const ProjectTables = () => {
           .catch((err) => {
             console.log(err);
           });
-  }, [selectedValue]);
+  }
+  useEffect(() => {
+    getListUser()
+  }, [selectedValue, AddThanhCong]);
 
   const editProfile = () => {
     const data = {
@@ -446,7 +440,8 @@ const ProjectTables = () => {
     
     callApi(`api/Users/AdminsuathongtinNhanVienKhachHang`, "PUT", data)
       .then((res) => {
-        window.alert("Cập nhật thành công!")
+        getListUser()
+        window.alert("Cập nhật thành công!")  
       })
       .catch((err) => {
         console.log(err);

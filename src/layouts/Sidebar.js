@@ -1,7 +1,6 @@
 import { Button, Nav, NavItem } from "reactstrap";
 import Logo from "./Logo";
 import { Link, useLocation } from "react-router-dom";
-
 const navigation = [
   {
     title: "Thống kê",
@@ -60,6 +59,11 @@ const navigation = [
     href: "/evaluation",
     icon: "bi bi-patch-check",
   },
+  {
+    title: "Hóa đơn",
+    href: "/bill",
+    icon: "bi bi-textarea-resize",
+  },
   // {
   //   title: "Forms",
   //   href: "/forms",
@@ -75,6 +79,19 @@ const navigation = [
   //   href: "/about",
   //   icon: "bi bi-people",
   // },
+];
+
+const navigation1 = [
+  {
+    title: "Đánh giá",
+    href: "/evaluation",
+    icon: "bi bi-patch-check",
+  },
+  {
+    title: "Hóa đơn",
+    href: "/bill",
+    icon: "bi bi-textarea-resize",
+  },
 ];
 
 const Sidebar = () => {
@@ -96,8 +113,8 @@ const Sidebar = () => {
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
-          {localStorage.getItem("accessToken") == "" ? <></> : navigation.map((navi, index) => 
-            (
+          {(localStorage.getItem("accessToken") != "" && localStorage.getItem("vaiTroId") == 1) ? navigation.map((navi, index) =>
+          (
             <NavItem key={index} className="sidenav-bg">
               <Link
                 to={navi.href}
@@ -111,7 +128,29 @@ const Sidebar = () => {
                 <span className="ms-3 d-inline-block">{navi.title}</span>
               </Link>
             </NavItem>
-          ))}
+
+          ))
+            : <></>
+          }
+          {(localStorage.getItem("accessToken") != "" && localStorage.getItem("vaiTroId") == 2) ? navigation1.map((navi, index) =>
+          (
+            <NavItem key={index} className="sidenav-bg">
+              <Link
+                to={navi.href}
+                className={
+                  location.pathname === navi.href
+                    ? "text-primary nav-link py-3"
+                    : "nav-link text-secondary py-3"
+                }
+              >
+                <i className={navi.icon}></i>
+                <span className="ms-3 d-inline-block">{navi.title}</span>
+              </Link>
+            </NavItem>
+
+          ))
+            : <></>
+          }
           {/* <Button
             color="danger"
             tag="a"

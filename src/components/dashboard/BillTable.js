@@ -4,6 +4,7 @@ import user2 from "../../assets/images/users/user2.jpg";
 import user3 from "../../assets/images/users/user3.jpg";
 import user4 from "../../assets/images/users/user4.jpg";
 import user5 from "../../assets/images/users/user5.jpg";
+import "../dashboard/css/Billdetail.css"
 
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -47,7 +48,14 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Collapse from '@mui/material/Collapse';
 // ................................................
 
 
@@ -83,34 +91,65 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'name',
+        id: '1',
         numeric: false,
         disablePadding: true,
-        label: 'Tên loại sản phẩm',
+        label: 'Tổng tiền(VNĐ)',
     },
+    // {
+    //   id: 'calories',
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: 'Họ và tên',
+    // },
     {
-        id: 'edit',
+        id: '2',
         numeric: true,
         disablePadding: false,
-        label: 'Chỉnh sửa',
+        label: 'Ngày đặt hàng',
     },
     {
-        id: 'delete',
+        id: '3',
         numeric: true,
         disablePadding: false,
-        label: 'Xóa',
+        label: 'Số điện thoại người nhận',
+    },
+    {
+        id: '4',
+        numeric: true,
+        disablePadding: false,
+        label: 'Địa chỉ',
+    },
+    {
+        id: '6',
+        numeric: true,
+        disablePadding: false,
+        label: 'Trạng thái',
+    },
+    {
+        id: '7',
+        numeric: true,
+        disablePadding: false,
+        label: 'Mô tả',
+    },
+
+    {
+        id: '8',
+        numeric: true,
+        disablePadding: false,
+        label: 'Xác nhận',
+    },
+    {
+        id: '9',
+        numeric: true,
+        disablePadding: false,
+        label: 'Hủy',
     },
 ];
 
 function EnhancedTableHead(props) {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
         props;
-
-
-
-    const createSortHandler = (property) => (event) => {
-        onRequestSort(event, property);
-    };
 
     return (
         <TableHead>
@@ -155,54 +194,6 @@ EnhancedTableHead.propTypes = {
 const EnhancedTableToolbar = (props) => {
     const { numSelected } = props;
 
-    //Add customer-------------------------------
-    const [openAddProduct, setOpenAddProduct] = React.useState(false);
-
-    const [tenLoaiSP, setTenLoaiSP] = useState('');
-    const [anh, setAnh] = useState('data:image/jpeg;base64,');
-
-    let base64String = "";
-    function imageUploaded1() {
-        var file = document.querySelector('input[type=file]')['files'][0];
-
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            setAnh(e.target.result);
-        }
-        //   reader.onload = function () {
-        //     base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-
-        //     setAnh('data:image/jpeg;base64,' + base64String)
-        //   }
-        console.log(anh)
-        reader.readAsDataURL(file);
-    }
-
-    const handleCloseAddProduct = () => {
-        setOpenAddProduct(false);
-    };
-    const handleOpenAddProduct = () => {
-        setOpenAddProduct(true);
-    };
-
-    const addProduct = () => {
-        const data = {
-            tenLoaiSP: tenLoaiSP,
-            hinhAnh: anh,
-        }
-        console.log(data)
-        callApi(`api/LoaiSanPham/themloaiSP`, "POST", data)
-            .then((res) => {
-                window.alert("Thêm thành công!")
-                window.location.reload()
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-
-
     return (
         <Toolbar
             sx={{
@@ -214,26 +205,6 @@ const EnhancedTableToolbar = (props) => {
                 }),
             }}
         >
-            <Dialog
-                open={openAddProduct}
-                keepMounted
-                onClose={handleCloseAddProduct}
-                aria-describedby="alert-dialog-slide-description"
-            >
-                <TextField onChange={(event) => setTenLoaiSP(event.target.value)} value={tenLoaiSP} style={{ margin: "5px", marginTop: "10px", width: "500px" }} id="outlined-basic" label="Tên loại sản phẩm" variant="outlined" />
-                <div style={{ margin: "5px", marginTop: "10px", width: "500px" }}>
-                    <img
-                        src={anh}
-                        // className="rounded-circle"
-                        // alt="avatar"
-                        width="45"
-                        height="45"
-                    />
-                    <input style={{ marginLeft: "5px" }} type="file" onChange={imageUploaded1}></input>
-                </div>
-                <Button onClick={addProduct} style={{ margin: "auto", marginBottom: "5px" }} variant="contained">Thêm loại sản phẩm mới</Button>
-            </Dialog>
-
             {numSelected > 0 ? (
                 <Typography
                     sx={{ flex: '1 1 100%' }}
@@ -250,15 +221,9 @@ const EnhancedTableToolbar = (props) => {
                     id="tableTitle"
                     component="div"
                 >
-                    Danh sách loại sản phẩm
+                    Danh sách hóa đơn
                 </Typography>
             )}
-
-            <Box style={{ float: "right" }} x={{ '& > :not(style)': { m: 1 } }} >
-                <Fab onClick={handleOpenAddProduct} color="success" aria-label="add">
-                    <AddIcon />
-                </Fab>
-            </Box>
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
                     <IconButton>
@@ -280,7 +245,7 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
 
-const TypeTable = () => {
+const BillTable = () => {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
@@ -288,89 +253,78 @@ const TypeTable = () => {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-    //Edit type of product-------------------------------------------------
-    const [openEditProfile, setOpenEditProfile] = React.useState(false);
+    const [status, setStatus] = React.useState(0);
+    const [rows, setListBill] = useState([])
+    const [open, setOpen] = React.useState(false);
+    const [hoaDonId, setHoaDonId] = React.useState('');
+    const [hoaDonStatus, setHoaDonStatus] = React.useState('');
 
-    const [tenLoaiSP, setTenLoaiSP] = useState('');
-    const [hinhAnh, setHinhAnh] = useState('');
-    const [idLoaiSP, setIdLoaiSP] = React.useState('');
-    let base64String = "";
-    function imageUploaded() {
-        var file = document.querySelector(
-            'input[type=file]')['files'][0];
+     //---------------------------
+     const [openSuccess, setOpenSuccess] = React.useState(false);
+     const [openError, setOpenError] = React.useState(false);
 
-        var reader = new FileReader();
-
-
-        reader.onload = function () {
-            base64String = reader.result.replace("data:", "")
-                .replace(/^.+,/, "");
-
-            setHinhAnh('data:image/jpeg;base64,' + base64String)
-
-        }
-        reader.readAsDataURL(file);
-    }
-    const getListLoaiSP = ()=>{
-        callApi(`api/LoaiSanPham/laydanhsachLoaiSP`, "GET")
-        .then((res) => {
-            setLoaiSanPham(res.data.data)
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    }
-    const handleClickOpenEditProFile = (idloaisp, tenloaisp, hinhanh) => {
-        setIdLoaiSP(idloaisp)
-        setTenLoaiSP(tenloaisp)
-        setHinhAnh(hinhanh)
-        setOpenEditProfile(true);
+    const handleClickOpen = (id, status) => {
+        setHoaDonId(id)
+        setHoaDonStatus(status)
+        setOpen(true);
     };
 
-    const handleCloseEditProFile = () => {
-        setOpenEditProfile(false);
+    const handleClose = () => {
+        setOpen(false);
     };
-    //Delete product----------------------------------
-    const deleteProduct = (id) => {
-        callApi(`api/LoaiSanPham/deleteLoaiSP/` + id, "DELETE")
-            .then((res) => {
-                window.alert("Xóa thành công!")
-                getListLoaiSP()
+    //------------------------------------------
+    const [billdetail, setBilldetail] = React.useState([]);
+    const [day, setDay] = React.useState();
+    const [listSP, setListSP] = React.useState([]);
+    const [price, setPrice] = React.useState();
+    const [soSP, setSoSp] = React.useState(1);
+    useEffect(() => {
+        callApi(`api/HoaDon/xemchitiethoadon/` + hoaDonId, "GET")
+            .then((res) => {         
+                setBilldetail(res.data.data[0])
+                setDay(new Date(res.data.data[0].ngayXuatDon).toISOString().split('T')[0])
+                setListSP(res.data.data[0].chiTietHD)
+                setPrice(format1(res.data.data[0].tongHoaDon))
+                setSoSp(1)
             })
             .catch((err) => {
                 console.log(err);
             });
-    }
+    }, [hoaDonId]);
 
     //-------------------------------------------
-    const [loaiSanPham, setLoaiSanPham] = useState([]);
-
     const handleChange = (event) => {
-        setIdLoaiSP(event.target.value);
+        setStatus(event.target.value);
     };
-
-    useEffect(() => {
-
-        getListLoaiSP()
-       
-    }, []);
-
-
-    const editProduct = () => {
-        const data = {
-            loaiSanPhamId: idLoaiSP,
-            tenLoaiSP: tenLoaiSP,
-            hinhAnh: hinhAnh,
-        }
-        console.log(data)
-        callApi(`api/LoaiSanPham/suaLoaiSP`, "PUT", data)
+    const getListBill = () => {
+        callApi(`api/HoaDon/danhsachtatcahoadon`, "GET")
             .then((res) => {
-                window.alert("Cập nhật thành công!")
-                getListLoaiSP()
+                setListBill(res.data.data)
             })
             .catch((err) => {
                 console.log(err);
             });
+    }
+    useEffect(() => {
+        filterBill(status)
+    }, [status]);
+
+    const filterBill = (status) => {
+        if (status == 0) {
+            getListBill()
+        }
+        else {
+            callApi(`api/HoaDon/danhsachtatcahoadon`, "GET")
+                .then((res) => {
+                    const listBillNew = res.data.data.filter((data) => data.trangThaiGiaoHangId == status)
+                    setListBill(listBillNew)
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            setPage(0)
+        }
+
     }
     //-----------------------------------------
     const handleRequestSort = (event, property) => {
@@ -381,7 +335,7 @@ const TypeTable = () => {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = loaiSanPham.map((n) => n.loaiSanPhamId);
+            const newSelecteds = rows.map((n) => n.hoaDonId);
             setSelected(newSelecteds);
             return;
         }
@@ -425,41 +379,127 @@ const TypeTable = () => {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - loaiSanPham.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     function format1(n) {
         return n.toFixed(0).replace(/./g, function (c, i, a) {
             return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
         });
     }
+    const changeStatusBill = (id, status) => {
+        const data = {
+            hoaDonId: id,
+            trangThaiGiaoHangId: status
+        }
+        callApi(`api/HoaDon/capnhattrangthaidonAdmin`, "PUT", data)
+            .then((res) => {
+                setStatus(status)
+                setOpenSuccess(true)
+                filterBill(status)
+            })
+            .catch((err) => {
+                setOpenError(true)
+                console.log(err);
+            });
+    }
     return (
         <div>
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                <Collapse in={openError}>
+                    <Alert variant="filled" severity="error"
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpenError(false);
+
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                        sx={{ mb: 2 }}>
+                        <AlertTitle>Error</AlertTitle>
+                        Thất bại!
+                    </Alert>
+                </Collapse>
+                <Collapse in={openSuccess}>
+                    <Alert variant="filled" severity="success"
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpenSuccess(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                        sx={{ mb: 2 }}>
+                        <AlertTitle>Success</AlertTitle>
+                        Thành công!
+                    </Alert>
+                </Collapse>
+            </Stack>
 
             <Dialog
-                open={openEditProfile}
+                open={open}
                 keepMounted
-                onClose={handleCloseEditProFile}
+                onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <TextField onChange={(event) => setTenLoaiSP(event.target.value)} value={tenLoaiSP} style={{ margin: "5px", marginTop: "10px", width: "500px" }} id="outlined-basic" label="Tên loại sản phẩm" variant="outlined" />
-                <div style={{ margin: "5px", marginTop: "10px", width: "500px" }}>
-                    <img
-                        src={hinhAnh}
-                        // className="rounded-circle"
-                        // alt="avatar"
-                        width="45"
-                        height="45"
-                    />
-                    <input style={{ marginLeft: "5px" }} onChange={imageUploaded} type="file" />
-                </div>
-                <Button onClick={editProduct} style={{ margin: "auto", marginBottom: "5px" }} variant="contained">Sửa thông tin</Button>
-            </Dialog>
+                <div>
+            <div style={{ marginLeft: "5px", minWidth: "550px", height: "210px" }} class="container-billdetil">
+                <div style={{ marginTop: "5px" }}></div>
+                <div class="cart-total-billdetail">
+                    <div class="products-billdetil">
+                        {stableSort(listSP, getComparator(order, orderBy))
+                            .slice(soSP - 1, soSP).map((data, a) => {
+                                return (
+                                    <div style={{ height: "210px" }} class="product-billdetil">
+                                        <img style={{ marginLeft: "5px", marginTop: "10px", minWidth: "220px" }} src={data.hinhAnh} />
 
+                                        <div class="product-billdetil-info">
+                                            <p style={{ marginBottom: "10px" }}>{data.tenSP}</p>
+                                            <p style={{ marginBottom: "5px" }} class="product-billdetil-price">Số lượng đặt: {data.soLuongDat}   </p>
+
+
+                                            <p style={{ color: "red", marginBottom: "5px", display: "flex", alignItems: "center" }} class="product-billdetil-offer">Giá: {format1(data.giaTien)} ₫ </p>
+                                        </div>
+
+                                    </div>
+                                )
+                            })}
+
+                    </div> <br />
+                </div>
+            </div>
+            <br />
+            <Stack spacing={2}>
+                <Pagination onChange={(event, value) => setSoSp(value)} style={{ margin: "auto" }} count={listSP.length} variant="outlined" />
+            </Stack>
+            <div style={{ margin: "5px" }}>
+                <p>Địa chỉ giao hàng:  {billdetail.diaChiGiaoHang}</p>
+                <p>Số điện thoại người nhận: {billdetail.sdtNguoiNhan} </p>
+                <p>Đã thanh toán: {billdetail.daThanhToan == true ? <>xong</> : <>chưa</>} </p>
+                <p>Trạng thái đơn hàng:  {billdetail.trangThaiGiaoHangId}</p>
+                <p>Ngày đặt hàng: {day}</p>
+                <p style={{ color: "red" }}>Tổng tiền: {price}  <sup>₫</sup></p>
+
+
+
+            </div>
+        </div >
+            </Dialog>
 
 
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
-                    <EnhancedTableToolbar numSelected={selected.length} loaiSanPham={loaiSanPham} />
+                    <EnhancedTableToolbar numSelected={selected.length} />
                     <FormControl sx={{
                         pl: { sm: 2 },
                         pr: { xs: 1, sm: 1 },
@@ -467,6 +507,24 @@ const TypeTable = () => {
 
                     </FormControl>
                     <TableContainer>
+                        <Box sx={{ marginTop: '10px' }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Trạng thái đơn hàng</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={status}
+                                    label="Trạng thái đơn hàng"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value={0}>Xem tất cả</MenuItem>
+                                    <MenuItem value={1}>Chờ xác nhận</MenuItem>
+                                    <MenuItem value={3}>Đang giao</MenuItem>
+                                    <MenuItem value={4}>Đã nhận</MenuItem>
+                                    <MenuItem value={5}>Đã hủy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                         <Table
                             sx={{ minWidth: 750 }}
                             aria-labelledby="tableTitle"
@@ -478,15 +536,15 @@ const TypeTable = () => {
                                 orderBy={orderBy}
                                 onSelectAllClick={handleSelectAllClick}
                                 onRequestSort={handleRequestSort}
-                                rowCount={loaiSanPham.length}
+                                rowCount={rows.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(loaiSanPham, getComparator(order, orderBy))
+                                {stableSort(rows, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
-                                        const isItemSelected = isSelected(row.loaiSanPhamId);
+                                        const isItemSelected = isSelected(row.hoaDonId);
                                         const labelId = `enhanced-table-checkbox-${index}`;
 
                                         return (
@@ -496,12 +554,12 @@ const TypeTable = () => {
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
-                                                key={row.sanPhamId}
+                                                key={row.hoaDonId}
                                                 selected={isItemSelected}
                                             >
                                                 <TableCell padding="checkbox">
                                                     <Checkbox
-                                                        onClick={(event) => handleClick(event, row.loaiSanPhamId)}
+                                                        onClick={(event) => handleClick(event, row.hoaDonId)}
                                                         color="primary"
                                                         checked={isItemSelected}
                                                         inputProps={{
@@ -515,34 +573,40 @@ const TypeTable = () => {
                                                     scope="row"
                                                     padding="none"
                                                 >
+                                                    {format1(row.tongHoaDon)} <sup>₫</sup>
 
-                                                    <div className="d-flex align-items-center p-2">
-                                                        <img
-                                                            src={row.hinhAnh}
-                                                            className="rounded-circle"
-                                                            alt="avatar"
-                                                            width="45"
-                                                            height="45"
-                                                        />
-                                                        <div style={{ width: "500px" }} className="ms-3">
-                                                            <h6 className="mb-0">{row.tenLoaiSP}</h6>
-                                                            <span className="text-muted">{row.email}</span>
-                                                        </div>
-                                                    </div>
-
+                                                </TableCell>
+                                                <TableCell align="right">{new Date(row.ngayXuatDon).toISOString().split('T')[0]}</TableCell>
+                                                <TableCell align="right">{row.sdtNguoiNhan}</TableCell>
+                                                <TableCell align="right">{row.diaChiGiaoHang}</TableCell>
+                                                <TableCell align="right">
+                                                    {row.trangThaiGiaoHangId == "1" && <>Chờ xác nhận</>} {row.trangThaiGiaoHangId == "3" && <>Đang giao</>} {row.trangThaiGiaoHangId == "4" && <>Đã nhận</>} {row.trangThaiGiaoHangId == "5" && <>Đã hủy</>}
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                                                        <Fab onClick={() => handleClickOpenEditProFile(row.loaiSanPhamId, row.tenLoaiSP, row.hinhAnh)} color="primary" aria-label="edit">
-                                                            <EditIcon />
+                                                        <Fab onClick={() => handleClickOpen(row.hoaDonId, row.trangThaiGiaoHangId)} color="danger" aria-label="delete">
+                                                            <AutoStoriesIcon />
                                                         </Fab>
                                                     </Box>
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                                                        <Fab onClick={() => deleteProduct(row.loaiSanPhamId)} color="danger" aria-label="delete">
-                                                            <DeleteIcon />
-                                                        </Fab>
+                                                        {row.trangThaiGiaoHangId == "1" &&
+                                                            <Fab onClick={() => changeStatusBill(row.hoaDonId, "3")} color="success" aria-label="delete">
+                                                                <CheckIcon />
+                                                            </Fab>
+                                                        }
+
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                                                        {row.trangThaiGiaoHangId == "1" &&
+                                                            <Fab onClick={() => changeStatusBill(row.hoaDonId, "5")} color="error" aria-label="delete">
+                                                                <CloseIcon />
+                                                            </Fab>
+                                                        }
+
                                                     </Box>
                                                 </TableCell>
                                             </TableRow>
@@ -563,7 +627,7 @@ const TypeTable = () => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={loaiSanPham.length}
+                        count={rows.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -580,4 +644,4 @@ const TypeTable = () => {
     );
 };
 
-export default TypeTable;
+export default BillTable;

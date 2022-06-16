@@ -21,6 +21,7 @@ const Products = lazy(() => import("../views/ui/Products"));
 const TypeOfProduct = lazy(() => import("../views/ui/TypeOfProduct"));
 const Discount = lazy(() => import("../views/ui/Discount"));
 const Evaluation = lazy(() => import("../views/ui/Evaluation"));
+const Bill = lazy(() => import("../views/ui/Bill"));
 /*****Routes******/
 
 const ThemeRoutes = [
@@ -52,6 +53,7 @@ const ThemeRoutes = [
       { path: "/typeofproduct", exact: true, element: <TypeOfProduct /> },
       { path: "/discount", exact: true, element: <Discount /> },
       { path: "/evaluation", exact: true, element: <Evaluation /> },
+      { path: "/bill", exact: true, element: <Bill /> },
     ],
   },
   
