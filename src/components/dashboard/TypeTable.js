@@ -193,7 +193,7 @@ const EnhancedTableToolbar = (props) => {
         }
         if(tenLoaiSP == "")
         {
-            indow.alert("Vui lòng điền đầy đủ thông tin!")
+            window.alert("Vui lòng điền đầy đủ thông tin!")
         }
         else
         {
