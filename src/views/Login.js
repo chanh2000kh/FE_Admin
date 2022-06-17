@@ -49,15 +49,24 @@ export default class Login extends PureComponent {
             .then((res) => {
               localStorage.setItem("vaiTroId", res.data.data[0].vaiTroId)
               window.alert('Đăng nhập thành công !')
-              if(localStorage.getItem("vaiTroId") == 1)window.location.replace('https://fe-admin.vercel.app/#/starter')
-              if(localStorage.getItem("vaiTroId") == 2)window.location.replace('https://fe-admin.vercel.app/#/evaluation')
+              if(res.data.data[0].vaiTroId == 1 || res.data.data[0].vaiTroId ==2)
+              {
+                if(res.data.data[0].vaiTroId == 1)window.location.replace('https://fe-admin.vercel.app/#/starter')
+                if(res.data.data[0].vaiTroId == 2)window.location.replace('https://fe-admin.vercel.app/#/evaluation')
+              }
+              else
+              {
+                localStorage.setItem("accessToken", "")
+                localStorage.setItem("vaiTroId", "")
+                window.alert('Sai tên đăng nhập hoặc mật khẩu!')
+              }
             })
             .catch((err) => {
               console.log(err);
             });
         })
         .catch((err) => {
-          window.alert('Sai mật khẩu hoặc email !')
+          window.alert('Sai tên đăng nhập hoặc mật khẩu!')
           console.log(err);
         });
     };

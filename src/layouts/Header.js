@@ -103,7 +103,7 @@ const Header = () => {
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
             <DropdownItem>Inbox</DropdownItem> */}
-              <DropdownItem onClick={Logout}>Logout</DropdownItem>
+              <DropdownItem onClick={Logout}>Đăng xuất</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         }

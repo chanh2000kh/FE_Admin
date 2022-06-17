@@ -191,15 +191,22 @@ const EnhancedTableToolbar = (props) => {
             tenLoaiSP: tenLoaiSP,
             hinhAnh: anh,
         }
-        console.log(data)
-        callApi(`api/LoaiSanPham/themloaiSP`, "POST", data)
-            .then((res) => {
-                window.alert("Thêm thành công!")
-                window.location.reload()
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if(tenLoaiSP == "")
+        {
+            indow.alert("Vui lòng điền đầy đủ thông tin!")
+        }
+        else
+        {
+            callApi(`api/LoaiSanPham/themloaiSP`, "POST", data)
+                .then((res) => {
+                    window.alert("Thêm thành công!")
+                    window.location.reload()
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+        
     }
 
 
