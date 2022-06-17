@@ -45,12 +45,12 @@ export default class Login extends PureComponent {
       callApi(`api/Users/dangnhap`, "POST", data1)
         .then((res) => {
           localStorage.setItem("accessToken", res.data.data)
+          window.alert('Đăng nhập thành công !')
           callApi(`api/Users/xemthongtinnguoidung`, "GET")
-            .then((res) => {
-              localStorage.setItem("vaiTroId", res.data.data[0].vaiTroId)
-              window.alert('Đăng nhập thành công !')
+            .then((res) => {                         
               if(res.data.data[0].vaiTroId == 1 || res.data.data[0].vaiTroId ==2)
               {
+                localStorage.setItem("vaiTroId", res.data.data[0].vaiTroId)
                 if(res.data.data[0].vaiTroId == 1)window.location.replace('https://fe-admin.vercel.app/#/starter')
                 if(res.data.data[0].vaiTroId == 2)window.location.replace('https://fe-admin.vercel.app/#/evaluation')
               }
@@ -58,7 +58,7 @@ export default class Login extends PureComponent {
               {
                 localStorage.setItem("accessToken", "")
                 localStorage.setItem("vaiTroId", "")
-                window.alert('Sai tên đăng nhập hoặc mật khẩu!')
+                window.alert('Bạn không có quyền vào trang này!')
               }
             })
             .catch((err) => {
