@@ -364,10 +364,14 @@ const ProjectTables = () => {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   //-------------------------------------------------------------
-  const [selectedValue, setSelectedValue] = React.useState('staff');
+  const [selectedValue, setSelectedValue] = React.useState('2');
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+  };
+
+  const handleChangeTypeSearch = (event) => {
+    setTypeSearch(event.target.value);
   };
 
   //Edit profile-------------------------------------------------
@@ -402,12 +406,25 @@ const ProjectTables = () => {
       console.log(err);
     });
   }
+
+  //search----------------------------------
+  const [kiTu, setKiTu] = useState('');
+  const [typeSearch, setTypeSearch] = useState('');
+  const searchUser = (id)=>{
+    callApi(`timkiemnguoidung/${kiTu}/${selectedValue}/${typeSearch}`, "GET" )
+    .then((res) => {
+      setListUser(res.data.data)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
   
   //-------------------------------------------
 
   const [listUser, setListUser] = useState([])
   const getListUser = ()=> {
-    if (selectedValue == 'staff')
+    if (selectedValue == '2')
       callApi(`api/Users/laydanhsachNhanVien`, "GET")
         .then((res) => {
           setListUser(res.data.data)
@@ -416,7 +433,7 @@ const ProjectTables = () => {
           console.log(err);
         });
     else 
-        if (selectedValue == 'customer')
+        if (selectedValue == '3')
         callApi(`api/Users/laydanhsachKhachHang`, "GET")
           .then((res) => {
             setListUser(res.data.data)
@@ -534,20 +551,56 @@ const ProjectTables = () => {
               name="row-radio-buttons-group"
             >
               <FormControlLabel value="female" control={
-                <Radio checked={selectedValue === 'staff'}
+                <Radio checked={selectedValue === '2'}
                   onChange={handleChange}
-                  value="staff"
+                  value="2"
                 />}
                 label="Nhân viên" />
               <FormControlLabel value="male" control={
                 <Radio
-                  checked={selectedValue === 'customer'}
+                  checked={selectedValue === '3'}
                   onChange={handleChange}
-                  value="customer"
+                  value="3"
                 />}
                 label="Khách hàng" />
             </RadioGroup>
           </FormControl>
+
+          <FormControl sx={{
+            pl: { sm: 2 },
+            pr: { xs: 1, sm: 1 },
+          }}>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+            >
+              <FormControlLabel value="female" control={
+                <Radio checked={selectedValue === '1'}
+                  onChange={handleChangeTypeSearch}
+                  value="1"
+                />}
+                label="Số điện thoại" />
+              <FormControlLabel value="male" control={
+                <Radio
+                  checked={selectedValue === '2'}
+                  onChange={handleChangeTypeSearch}
+                  value="2"
+                />}
+                label="Tên người dùng" />
+                <FormControlLabel value="male" control={
+                <Radio
+                  checked={selectedValue === '3'}
+                  onChange={handleChangeTypeSearch}
+                  value="3"
+                />}
+                label="Email" />
+            </RadioGroup>  
+          </FormControl>
+          <div style={{ marginTop: "10px" }}>
+              <TextField onChange={(event) => setKiTu(event.target.value)} style={{ width: "50%" }} value={kiTu} id="outlined-basic" label="Nhập từ tìm kiếm" variant="outlined" />
+              <Button onClick={searchUser} style={{ margin: "auto" }} variant="contained">Tìm kiếm</Button>
+            </div>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
