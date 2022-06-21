@@ -413,6 +413,7 @@ const ProductTables = () => {
   //-------------------------------------------
   const [loaiSanPham, setLoaiSanPham] = useState([]);
   const [idLoaiSP, setIdLoaiSP] = React.useState('');
+  const [nameSP, setNameSP] = React.useState('');
   const handleChange = (event) => {
     setIdLoaiSP(event.target.value);
   };
@@ -432,10 +433,24 @@ const ProductTables = () => {
   }, []);
   const layDanhSach = ()=>
   {
+    if(idLoaiSP != "")
     callApi(`api/SanPham/laysptheoLoaisanpham/` + idLoaiSP+'/1/30', "GET")
       .then((res) => {
         setListSanPham(res.data.data.danhSachSanPham)
         setPage(0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const TimKiemSP = ()=>
+  {
+    callApi(`api/SanPham/timkiemsanphamtheoten/` + nameSP+'/1/30', "GET")
+      .then((res) => {
+        setListSanPham(res.data.data.danhSachSanPham)
+        setPage(0);
+        setIdLoaiSP("")
       })
       .catch((err) => {
         console.log(err);
@@ -583,6 +598,8 @@ const ProductTables = () => {
                 </Select>
               </FormControl>
             </Box>
+            <TextField onChange={(event) => setNameSP(event.target.value)} value={nameSP} id="outlined-basic" label="Tên sản phẩm muốn tìm" variant="outlined" />
+            <Button onClick={TimKiemSP} style={{ margin: "auto", marginBottom: "5px" }} variant="contained">Tìm kiếm</Button>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
