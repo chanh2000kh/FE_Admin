@@ -223,7 +223,7 @@ const EnhancedTableToolbar = (props) => {
       giamGia: giamGia,
       moTa: moTa,
       soLuongConLai: soLuongConLai,
-      loaiSanPhamId: idLoaiSP, 
+      loaiSanPhamId: idLoaiSP,
     }
 
     callApi(`api/SanPham/themSP`, "POST", data)
@@ -270,36 +270,36 @@ const EnhancedTableToolbar = (props) => {
       >
         <TextField onChange={(event) => setTenSP(event.target.value)} value={tenSP} style={{ margin: "5px", width: "500px" }} id="outlined-basic" label="Tên sản phẩm" variant="outlined" />
         <div style={{ margin: "5px", marginTop: "10px", width: "500px" }}>
-        <img         
-          src={hinhAnh}
-          // className="rounded-circle"
-          // alt="avatar"
-          width="45"
-          height="45"
-        />
-        <input style={{ marginLeft: "5px" }} onChange={imageUploaded}  type="file"  />
+          <img
+            src={hinhAnh}
+            // className="rounded-circle"
+            // alt="avatar"
+            width="45"
+            height="45"
+          />
+          <input style={{ marginLeft: "5px" }} onChange={imageUploaded} type="file" />
         </div>
-        
-        <TextField onChange={(event) => setGiaTien(event.target.value)} value={giaTien} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giá tiền(VNĐ)" variant="outlined" />
-        <TextField onChange={(event) => setGiamGia(event.target.value)} value={giamGia} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giảm giá(%)" variant="outlined" />
-        <TextField onChange={(event) => setMoTa(event.target.value)} value={moTa} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} id="outlined-basic" label="Mô tả" variant="outlined" />
-        <TextField onChange={(event) => setSoLuongConLai(event.target.value)} value={soLuongConLai} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} id="outlined-basic" label="Số lượng còn lại" variant="outlined" />
-        <Box sx={{ margin: "5px",  marginTop: "10px", width: "500px" }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Loại sản phẩm</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={idLoaiSP}
-                  label="Loại sản phẩm"
-                  onChange={handleChange}
-                >
-                  {loaiSanPham.map((data) => {
-                    return <MenuItem value={data.loaiSanPhamId}>{data.tenLoaiSP}</MenuItem>
-                  })}
-                </Select>
-              </FormControl>
-            </Box>
+
+        <TextField onChange={(event) => setGiaTien(event.target.value)} value={giaTien} style={{ margin: "5px", marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giá tiền(VNĐ)" variant="outlined" />
+        <TextField onChange={(event) => setGiamGia(event.target.value)} value={giamGia} style={{ margin: "5px", marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giảm giá(%)" variant="outlined" />
+        <TextField onChange={(event) => setMoTa(event.target.value)} value={moTa} style={{ margin: "5px", marginTop: "10px", width: "500px" }} id="outlined-basic" label="Mô tả" variant="outlined" />
+        <TextField onChange={(event) => setSoLuongConLai(event.target.value)} value={soLuongConLai} style={{ margin: "5px", marginTop: "10px", width: "500px" }} id="outlined-basic" label="Số lượng còn lại" variant="outlined" />
+        <Box sx={{ margin: "5px", marginTop: "10px", width: "500px" }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Loại sản phẩm</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={idLoaiSP}
+              label="Loại sản phẩm"
+              onChange={handleChange}
+            >
+              {loaiSanPham.map((data) => {
+                return <MenuItem value={data.loaiSanPhamId}>{data.tenLoaiSP}</MenuItem>
+              })}
+            </Select>
+          </FormControl>
+        </Box>
         <Button onClick={addProduct} style={{ margin: "auto", marginBottom: "5px" }} variant="contained">Thêm sản phẩm mới</Button>
       </Dialog>
 
@@ -431,22 +431,21 @@ const ProductTables = () => {
         console.log(err);
       });
   }, []);
-  const layDanhSach = ()=>
-  {
-    if(idLoaiSP != "")
-    callApi(`api/SanPham/laysptheoLoaisanpham/` + idLoaiSP+'/1/30', "GET")
-      .then((res) => {
-        setListSanPham(res.data.data.danhSachSanPham)
-        setPage(0);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const layDanhSach = () => {
+    if (idLoaiSP != "")
+      callApi(`api/SanPham/laysptheoLoaisanpham/` + idLoaiSP + '/1/30', "GET")
+        .then((res) => {
+          setListSanPham(res.data.data.danhSachSanPham)
+          setPage(0);
+          setNameSP("")
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }
 
-  const TimKiemSP = ()=>
-  {
-    callApi(`api/SanPham/timkiemsanphamtheoten/` + nameSP+'/1/30', "GET")
+  const TimKiemSP = () => {
+    callApi(`api/SanPham/timkiemsanphamtheoten/` + nameSP + '/1/30', "GET")
       .then((res) => {
         setListSanPham(res.data.data.danhSachSanPham)
         setPage(0);
@@ -552,20 +551,20 @@ const ProductTables = () => {
       >
         <TextField onChange={(event) => setTenSP(event.target.value)} value={tenSP} style={{ margin: "5px", width: "500px" }} id="outlined-basic" label="Tên sản phẩm" variant="outlined" />
         <div style={{ margin: "5px", marginTop: "10px", width: "500px" }}>
-        <img         
-          src={hinhAnh}
-          // className="rounded-circle"
-          // alt="avatar"
-          width="45"
-          height="45"
-        />
-        <input style={{ marginLeft: "5px" }} onChange={imageUploaded}  type="file"  />
+          <img
+            src={hinhAnh}
+            // className="rounded-circle"
+            // alt="avatar"
+            width="45"
+            height="45"
+          />
+          <input style={{ marginLeft: "5px" }} onChange={imageUploaded} type="file" />
         </div>
-        
-        <TextField onChange={(event) => setGiaTien(event.target.value)} value={giaTien} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giá tiền(VNĐ)" variant="outlined" />
-        <TextField onChange={(event) => setGiamGia(event.target.value)} value={giamGia} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giảm giá(%)" variant="outlined" />
-        <TextField onChange={(event) => setMoTa(event.target.value)} value={moTa} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} id="outlined-basic" label="Mô tả" variant="outlined" />
-        <TextField onChange={(event) => setSoLuongConLai(event.target.value)} value={soLuongConLai} style={{ margin: "5px",  marginTop: "10px", width: "500px" }} id="outlined-basic" label="Số lượng còn lại" variant="outlined" />
+
+        <TextField onChange={(event) => setGiaTien(event.target.value)} value={giaTien} style={{ margin: "5px", marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giá tiền(VNĐ)" variant="outlined" />
+        <TextField onChange={(event) => setGiamGia(event.target.value)} value={giamGia} style={{ margin: "5px", marginTop: "10px", width: "500px" }} type='number' id="outlined-basic" label="Giảm giá(%)" variant="outlined" />
+        <TextField onChange={(event) => setMoTa(event.target.value)} value={moTa} style={{ margin: "5px", marginTop: "10px", width: "500px" }} id="outlined-basic" label="Mô tả" variant="outlined" />
+        <TextField onChange={(event) => setSoLuongConLai(event.target.value)} value={soLuongConLai} style={{ margin: "5px", marginTop: "10px", width: "500px" }} id="outlined-basic" label="Số lượng còn lại" variant="outlined" />
         <Button onClick={editProduct} style={{ margin: "auto", marginBottom: "5px" }} variant="contained">Sửa thông tin</Button>
       </Dialog>
 
@@ -581,6 +580,10 @@ const ProductTables = () => {
 
           </FormControl>
           <TableContainer>
+            <div style={{ marginTop: "10px" }}>
+              <TextField onChange={(event) => setNameSP(event.target.value)} style={{ width: "50%" }} value={nameSP} id="outlined-basic" label="Tên sản phẩm muốn tìm" variant="outlined" />
+              <Button onClick={TimKiemSP} style={{ margin: "auto" }} variant="contained">Tìm kiếm</Button>
+            </div>
             <Box sx={{ marginTop: '10px' }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Loại sản phẩm</InputLabel>
@@ -598,8 +601,8 @@ const ProductTables = () => {
                 </Select>
               </FormControl>
             </Box>
-            <TextField onChange={(event) => setNameSP(event.target.value)} value={nameSP} id="outlined-basic" label="Tên sản phẩm muốn tìm" variant="outlined" />
-            <Button onClick={TimKiemSP} style={{ margin: "auto", marginBottom: "5px" }} variant="contained">Tìm kiếm</Button>
+
+
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
