@@ -566,7 +566,10 @@ const ProjectTables = () => {
             </RadioGroup>
           </FormControl>
 
-          <FormControl sx={{
+          
+          <div style={{ marginTop: "10px" }}>
+              <TextField onChange={(event) => setKiTu(event.target.value)} style={{ width: "50%" }} value={kiTu} id="outlined-basic" label="Nhập từ tìm kiếm" variant="outlined" />
+              <FormControl sx={{
             pl: { sm: 2 },
             pr: { xs: 1, sm: 1 },
           }}>
@@ -576,29 +579,27 @@ const ProjectTables = () => {
               name="row-radio-buttons-group"
             >
               <FormControlLabel value="female" control={
-                <Radio checked={selectedValue === '1'}
+                <Radio checked={typeSearch === '1'}
                   onChange={handleChangeTypeSearch}
                   value="1"
                 />}
                 label="Số điện thoại" />
               <FormControlLabel value="male" control={
                 <Radio
-                  checked={selectedValue === '2'}
+                  checked={typeSearch === '2'}
                   onChange={handleChangeTypeSearch}
                   value="2"
                 />}
                 label="Tên người dùng" />
                 <FormControlLabel value="male" control={
                 <Radio
-                  checked={selectedValue === '3'}
+                  checked={typeSearch === '3'}
                   onChange={handleChangeTypeSearch}
                   value="3"
                 />}
                 label="Email" />
             </RadioGroup>  
           </FormControl>
-          <div style={{ marginTop: "10px" }}>
-              <TextField onChange={(event) => setKiTu(event.target.value)} style={{ width: "50%" }} value={kiTu} id="outlined-basic" label="Nhập từ tìm kiếm" variant="outlined" />
               <Button onClick={searchUser} style={{ margin: "auto" }} variant="contained">Tìm kiếm</Button>
             </div>
           <TableContainer>
