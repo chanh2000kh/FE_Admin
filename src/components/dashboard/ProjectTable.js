@@ -411,7 +411,7 @@ const ProjectTables = () => {
   const [kiTu, setKiTu] = useState('');
   const [typeSearch, setTypeSearch] = useState('');
   const searchUser = (id)=>{
-    callApi(`timkiemnguoidung/${kiTu}/${selectedValue}/${typeSearch}`, "GET" )
+    callApi(`api/Users/timkiemnguoidung/${kiTu}/${selectedValue}/${typeSearch}`, "GET" )
     .then((res) => {
       setListUser(res.data.data)
     })
